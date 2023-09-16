@@ -29,6 +29,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"ionicons": "^7.1.2",
 		"normalize.css": "^8.0.1"
 	}
 }
