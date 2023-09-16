@@ -8,4 +8,7 @@
 	<li>
 		<a href="3FlashlightButton">Flashlight button</a>
 	</li>
+	<li>
+		<a href="4Rubberbanding">Rubberbanding</a>
+	</li>
 </ul>
