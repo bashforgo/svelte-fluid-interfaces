@@ -11,4 +11,7 @@
 	<li>
 		<a href="4Rubberbanding">Rubberbanding</a>
 	</li>
+	<li>
+		<a href="5AccelerationPausing">Acceleration pausing</a>
+	</li>
 </ul>

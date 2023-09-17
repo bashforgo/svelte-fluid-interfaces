@@ -1,14 +1,9 @@
-<script lang="ts" context="module">
+<script lang="ts">
+	import { rubberband } from '$lib/utilities/rubberband';
 	import { DragGesture } from '@use-gesture/vanilla';
 	import type { Action } from 'svelte/action';
 	import { spring } from 'svelte/motion';
 
-	const rubberband = (movement: number, factor = 0.7) => {
-		return Math.sign(movement) * Math.abs(movement) ** factor;
-	};
-</script>
-
-<script lang="ts">
 	const translatePx = spring({ x: 0, y: 0 });
 
 	const dragGestureAction: Action = (element) => {
