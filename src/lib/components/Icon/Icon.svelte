@@ -15,7 +15,9 @@
 </script>
 
 <div class="icon">
-	{#await importSvg?.() ?? Promise.reject() then svg}
+	{#await importSvg?.() ?? Promise.reject()}
+		<svg viewBox="0 0 1 1" />
+	{:then svg}
 		{@html svg}
 	{:catch}
 		{@html squareSvg}
@@ -26,5 +28,6 @@
 	.icon {
 		fill: currentColor;
 		stroke: currentColor;
+		line-height: 0;
 	}
 </style>
