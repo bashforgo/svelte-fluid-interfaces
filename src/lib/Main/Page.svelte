@@ -20,4 +20,7 @@
 	<li>
 		<a href="7FaceTimePiP">FaceTime PiP</a>
 	</li>
+	<li>
+		<a href="8Rotation">Rotation</a>
+	</li>
 </ul>
