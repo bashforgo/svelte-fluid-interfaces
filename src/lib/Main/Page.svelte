@@ -14,4 +14,7 @@
 	<li>
 		<a href="5AccelerationPausing">Acceleration pausing</a>
 	</li>
+	<li>
+		<a href="6RewardingMomentum">Rewarding momentum</a>
+	</li>
 </ul>
