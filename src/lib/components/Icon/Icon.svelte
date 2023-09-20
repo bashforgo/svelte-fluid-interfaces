@@ -1,26 +1,24 @@
-<script lang="ts" context="module">
-	import type { Kebab } from '$lib/types/Kebab';
-	import squareSvg from 'ionicons/dist/svg/square-sharp.svg?raw';
-
-	const icons = import.meta.glob('/node_modules/ionicons/dist/svg/*.svg', {
-		as: 'raw',
-		import: 'default'
-	});
-</script>
-
 <script lang="ts">
-	export let name: Kebab<keyof typeof import('ionicons/icons')>;
+	import { page } from '$app/stores';
+	import type { IconName } from './IconName';
+	import { importIconSvg } from './importIconSvg';
+	import { getPageDataIconKey } from './loadIcon';
 
-	$: importSvg = icons[`/node_modules/ionicons/dist/svg/${name}.svg`];
+	export let name: IconName;
+
+	const getSvg = () => {
+		const loaded = $page.data[getPageDataIconKey(name)];
+		return loaded ? loaded : importIconSvg(name)();
+	};
 </script>
 
 <div class="icon">
-	{#await importSvg?.() ?? Promise.reject()}
+	{#await getSvg()}
 		<svg viewBox="0 0 1 1" />
 	{:then svg}
 		{@html svg}
 	{:catch}
-		{@html squareSvg}
+		<svg viewBox="0 0 1 1" />
 	{/await}
 </div>
 
