@@ -2,7 +2,7 @@
 	import Link from './Link.svelte';
 </script>
 
-<h1>&nbsp; Fluid Interfaces</h1>
+<h1>Fluid Interfaces</h1>
 
 <ul>
 	<li>
@@ -41,11 +41,16 @@
 	</li>
 </ul>
 
+<footer>
+	<a href="About">About</a>
+</footer>
+
 <style>
 	h1 {
 		background: linear-gradient(40deg, #ea98da 20%, #5b6cf9);
 		background-clip: text;
 		color: transparent;
+		padding: 0 8px;
 	}
 
 	ul {
@@ -55,5 +60,21 @@
 		padding: 0;
 		gap: 1px;
 		margin: 0;
+	}
+
+	footer {
+		display: flex;
+		position: fixed;
+		bottom: 16px;
+		width: 100%;
+		justify-content: center;
+	}
+
+	footer > a {
+		text-decoration: none;
+		color: inherit;
+		padding: 8px 16px;
+		background: #222;
+		border-radius: 99px;
 	}
 </style>
