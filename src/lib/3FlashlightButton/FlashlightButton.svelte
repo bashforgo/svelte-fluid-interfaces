@@ -2,33 +2,39 @@
 	import Icon from '$lib/components/Icon/Icon.svelte';
 	import { spring } from 'svelte/motion';
 
-	const ON_BACKGROUND_COLOR = '#F2F2F2';
+	const ON_BACKGROUND_COLOR = '#f2f2f2';
 	const OFF_BACKGROUND_COLOR = '#333333';
+	
 	const ON_COLOR = '#000000';
-	const OFF_COLOR = '#FFFFFF';
+	const OFF_COLOR = '#ffffff';
 
 	let isOn = false;
 
 	const scale = spring(1, { precision: 0.01 });
 
-	let button: HTMLElement;
+	const grow = async () => {
+		Object.assign(scale, { stiffness: 0.075, damping: 0.6 });
+		await scale.set(1.5);
+	};
+
+	const shrink = async () => {
+		Object.assign(scale, { stiffness: 0.1, damping: 0.2 });
+		await scale.set(1);
+	};
 
 	const handleStart = () => {
-		Object.assign(scale, { stiffness: 0.075, damping: 0.6 });
-		scale.set(1.5).then(() => {
+		grow().then(() => {
 			isOn = !isOn;
-			handleEnd();
+			shrink();
 		});
 	};
 
 	const handleEnd = () => {
-		Object.assign(scale, { stiffness: 0.1, damping: 0.2 });
-		scale.set(1);
+		shrink();
 	};
 </script>
 
 <button
-	bind:this={button}
 	class="button"
 	style:background-color={isOn ? ON_BACKGROUND_COLOR : OFF_BACKGROUND_COLOR}
 	style:color={isOn ? ON_COLOR : OFF_COLOR}

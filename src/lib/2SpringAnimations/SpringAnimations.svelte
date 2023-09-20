@@ -2,14 +2,16 @@
 	import { onMount } from 'svelte';
 	import { spring } from 'svelte/motion';
 
-	let boundsClientWidth = 0;
-	let boxClientWidth = 0;
+	let box: HTMLElement;
 
 	const translateX = spring(0);
 
 	const runAnimation = async () => {
+		const { width: boxWidth } = box.getBoundingClientRect();
+		const { width: boundsWidth } = box.parentElement?.getBoundingClientRect()!;
+
 		await translateX.set(0, { hard: true });
-		await translateX.set(boundsClientWidth - boxClientWidth);
+		await translateX.set(boundsWidth - boxWidth);
 		await runAnimation();
 	};
 
@@ -18,12 +20,8 @@
 	});
 </script>
 
-<div class="bounds" bind:clientWidth={boundsClientWidth}>
-	<div
-		class="box"
-		style:transform="translateX({$translateX}px)"
-		bind:clientWidth={boxClientWidth}
-	/>
+<div class="bounds">
+	<div class="box" style:transform="translateX({$translateX}px)" bind:this={box} />
 </div>
 
 <div class="controls">

@@ -7,20 +7,22 @@
 
 	const DEFAULT_SPRING_OPTIONS: SpringOpts = { stiffness: 0.15, damping: 0.8 };
 	const BOUNCY_SPRING_OPTIONS: SpringOpts = { stiffness: 0.3, damping: 1 };
-	const TRANSLATE_PX_CLOSED = { x: 0, y: 0 };
-	const TRANSLATE_PX_OPEN = { x: 0, y: browser ? -(window.innerHeight - 160) : 0 }; // TODO handle resize
-	const translatePx = spring({ x: 0, y: 0 });
+
+	const TRANSLATE_Y_PX_CLOSED = 0;
+	const TRANSLATE_Y_PX_OPEN = browser ? -(window.innerHeight - 160) : 0; // TODO handle resize
+
+	const translateYPx = spring(TRANSLATE_Y_PX_CLOSED);
 
 	let isOpen = false;
 
 	const toggle = async (bouncy = false) => {
 		isOpen = !isOpen;
-		Object.assign(translatePx, bouncy ? BOUNCY_SPRING_OPTIONS : DEFAULT_SPRING_OPTIONS);
+		Object.assign(translateYPx, bouncy ? BOUNCY_SPRING_OPTIONS : DEFAULT_SPRING_OPTIONS);
 		await resetTranslatePx();
 	};
 
 	const resetTranslatePx = async () => {
-		await translatePx.set(isOpen ? TRANSLATE_PX_OPEN : TRANSLATE_PX_CLOSED, { soft: true });
+		await translateYPx.set(isOpen ? TRANSLATE_Y_PX_OPEN : TRANSLATE_Y_PX_CLOSED, { soft: true });
 	};
 
 	const dragGestureAction: Action = (element) => {
@@ -34,12 +36,9 @@
 
 				const yDirection = Math.sign(my);
 				const desiredYDirection = isOpen ? 1 : -1;
-				const yOffset = isOpen ? TRANSLATE_PX_OPEN.y : 0;
+				const yOffset = isOpen ? TRANSLATE_Y_PX_OPEN : 0;
 
-				$translatePx = {
-					x: 0,
-					y: yOffset + (yDirection === desiredYDirection ? my : rubberband(my, 0.3))
-				};
+				translateYPx.set(yOffset + (yDirection === desiredYDirection ? my : rubberband(my, 0.3)));
 
 				if (last) {
 					const velocity = Math.abs(my) / elapsedTime;
@@ -65,7 +64,7 @@
 		type="button"
 		class="sheet"
 		use:dragGestureAction
-		style:transform="translate({$translatePx.x}px, {$translatePx.y}px)"
+		style:transform="translateY({$translateYPx}px)"
 	/>
 </div>
 

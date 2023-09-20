@@ -8,7 +8,7 @@
 
 	const dragGestureAction: Action = (element) => {
 		const dragGesture = new DragGesture(element, ({ last, movement: [mx, my] }) => {
-			$translatePx = last ? { x: 0, y: 0 } : { x: rubberband(mx, 0.4), y: rubberband(my, 0.8) };
+			translatePx.set(last ? { x: 0, y: 0 } : { x: rubberband(mx, 0.4), y: rubberband(my, 0.8) });
 		});
 
 		return {

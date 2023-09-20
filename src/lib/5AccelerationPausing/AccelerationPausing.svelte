@@ -8,6 +8,7 @@
 	const yVelocities: number[] = [];
 
 	let isPaused = false;
+	
 	const translatePx = spring({ x: 0, y: 0 });
 
 	const dragGestureAction: Action = (element) => {
@@ -25,12 +26,11 @@
 				if (ratio < 0.1 && vy > 0.1) isPaused = true;
 
 				if (last) {
-					$translatePx = { x: 0, y: 0 };
+					translatePx.set({ x: 0, y: 0 });
 					isPaused = false;
-					return;
+				} else {
+					translatePx.set({ x: rubberband(mx, 0.6), y: my > 0 ? rubberband(my) : my });
 				}
-
-				$translatePx = { x: rubberband(mx, 0.6), y: my > 0 ? rubberband(my) : my };
 			}
 		);
 
