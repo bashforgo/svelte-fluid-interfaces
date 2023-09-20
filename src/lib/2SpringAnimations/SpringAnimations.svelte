@@ -1,12 +1,16 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { spring } from 'svelte/motion';
 
 	let box: HTMLElement;
 
 	const translateX = spring(0);
 
+	const abortController = new AbortController();
+
 	const runAnimation = async () => {
+		if (abortController.signal.aborted) return;
+
 		const { width: boxWidth } = box.getBoundingClientRect();
 		const { width: boundsWidth } = box.parentElement?.getBoundingClientRect()!;
 
@@ -17,6 +21,10 @@
 
 	onMount(() => {
 		runAnimation();
+	});
+
+	onDestroy(() => {
+		abortController.abort();
 	});
 </script>
 
